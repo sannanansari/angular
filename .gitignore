@@ -1,0 +1,32 @@
+# Compiled output
+/tmp
+/out-tsc
+/bazel-out
+
+# Node dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+/.vscode
+/*.swp
+/*.swo
+/*.ntvs*
+/*.njsproj
+/*.sln
+/*.sw?
+
+# Angular cache (Added in Angular 14+)
+/.angular/cache
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Optional: Environment secrets
+/src/environments/environment.prod.ts

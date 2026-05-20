@@ -1,0 +1,50 @@
+<div class="playground">
+  <div class="pg-label">Playground 04</div>
+  <h2 class="pg-title">Dependency Injection Tree</h2>
+  <p class="pg-desc">
+    Where you provide a service determines who shares the same instance.
+    <strong>Root</strong> means one instance for the entire app.
+    <strong>Component</strong> means each component gets its own fresh instance.
+    Getting this wrong causes subtle bugs that are hard to trace.
+  </p>
+
+  <div class="di-grid">
+    @for (scope of scopes; track scope.key) {
+      <div class="di-box">
+        <div class="di-box-label">{{ scope.label }}</div>
+        <div class="di-counter">{{ scope.count }}</div>
+        <div class="di-desc">{{ scope.desc }}</div>
+        <div class="di-actions">
+          <button class="btn" (click)="increment(scope.key)">+1</button>
+          <button class="btn btn-ghost" (click)="reset(scope.key)">reset</button>
+        </div>
+        <div class="di-provider">
+          <span class="provider-code">{{ scope.provider }}</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="di-tree">
+    <div class="tree-label">injector hierarchy</div>
+    <div class="tree-visual">
+      <div class="tree-node node-root">NullInjector</div>
+      <div class="tree-connector"></div>
+      <div class="tree-node node-platform">PlatformInjector</div>
+      <div class="tree-connector"></div>
+      <div class="tree-node node-app">AppInjector (root) ← providedIn: 'root'</div>
+      <div class="tree-connector"></div>
+      <div class="tree-node node-env">EnvironmentInjector (lazy modules)</div>
+      <div class="tree-connector"></div>
+      <div class="tree-node node-comp">ElementInjector ← providers: [MyService]</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <span class="insight-label">key insight</span>
+    Angular walks UP the injector tree until it finds the service.
+    Component-level providers create a new instance that is destroyed with the component.
+  </div>
+
+  <app-code-snippet [code]="code" />
+</div>

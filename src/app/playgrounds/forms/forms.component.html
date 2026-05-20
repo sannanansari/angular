@@ -1,0 +1,104 @@
+<div class="playground">
+  <div class="pg-label">Playground 05</div>
+  <h2 class="pg-title">Template Driven vs Reactive Forms</h2>
+  <p class="pg-desc">
+    Angular gives you two ways to build forms. Template Driven is simpler for basic cases.
+    Reactive gives you full programmatic control, easier testing, and dynamic form building.
+    Both produce valid form data — the difference is <em>where</em> the logic lives.
+  </p>
+
+  <div class="forms-grid">
+    <div class="form-col">
+      <div class="form-col-label">Template Driven</div>
+      <p class="form-col-desc">Logic lives in the template. Angular creates the FormGroup implicitly via ngModel.</p>
+
+      <form #tdForm="ngForm" (ngSubmit)="onTdSubmit(tdForm)" class="form">
+        <div class="field">
+          <label>Name</label>
+          <input name="name" ngModel required minlength="2" #nameField="ngModel" />
+          @if (nameField.invalid && nameField.touched) {
+            <span class="field-error">Name is required (min 2 chars)</span>
+          }
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input name="email" type="email" ngModel required email #emailField="ngModel" />
+          @if (emailField.invalid && emailField.touched) {
+            <span class="field-error">Valid email required</span>
+          }
+        </div>
+        <div class="field">
+          <label>Role</label>
+          <select name="role" ngModel required>
+            <option value="">Select role</option>
+            <option value="frontend">Frontend</option>
+            <option value="backend">Backend</option>
+            <option value="fullstack">Full Stack</option>
+          </select>
+        </div>
+        <button type="submit" class="btn" [disabled]="tdForm.invalid">Submit</button>
+      </form>
+
+      <div class="form-state">
+        <div class="state-label">form state</div>
+        <div class="state-row"><span>valid</span><span [class]="tdForm.valid ? 'state-t' : 'state-f'">{{ tdForm.valid }}</span></div>
+        <div class="state-row"><span>dirty</span><span [class]="tdForm.dirty ? 'state-t' : 'state-f'">{{ tdForm.dirty }}</span></div>
+        <div class="state-row"><span>touched</span><span [class]="tdForm.touched ? 'state-t' : 'state-f'">{{ tdForm.touched }}</span></div>
+      </div>
+    </div>
+
+    <div class="form-col">
+      <div class="form-col-label">Reactive Forms</div>
+      <p class="form-col-desc">Logic lives in the component class. You control the FormGroup explicitly.</p>
+
+      <form [formGroup]="reactiveForm" (ngSubmit)="onReactiveSubmit()" class="form">
+        <div class="field">
+          <label>Name</label>
+          <input formControlName="name" />
+          @if (rf['name'].invalid && rf['name'].touched) {
+            <span class="field-error">Name is required (min 2 chars)</span>
+          }
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input formControlName="email" type="email" />
+          @if (rf['email'].invalid && rf['email'].touched) {
+            <span class="field-error">Valid email required</span>
+          }
+        </div>
+        <div class="field">
+          <label>Role</label>
+          <select formControlName="role">
+            <option value="">Select role</option>
+            <option value="frontend">Frontend</option>
+            <option value="backend">Backend</option>
+            <option value="fullstack">Full Stack</option>
+          </select>
+        </div>
+        <button type="submit" class="btn" [disabled]="reactiveForm.invalid">Submit</button>
+      </form>
+
+      <div class="form-state">
+        <div class="state-label">form state</div>
+        <div class="state-row"><span>valid</span><span [class]="reactiveForm.valid ? 'state-t' : 'state-f'">{{ reactiveForm.valid }}</span></div>
+        <div class="state-row"><span>dirty</span><span [class]="reactiveForm.dirty ? 'state-t' : 'state-f'">{{ reactiveForm.dirty }}</span></div>
+        <div class="state-row"><span>touched</span><span [class]="reactiveForm.touched ? 'state-t' : 'state-f'">{{ reactiveForm.touched }}</span></div>
+      </div>
+    </div>
+  </div>
+
+  @if (submitted) {
+    <div class="submitted">
+      <span class="submitted-label">last submission</span>
+      <pre>{{ submitted | json }}</pre>
+    </div>
+  }
+
+  <div class="insight">
+    <span class="insight-label">key insight</span>
+    Reactive Forms are easier to unit test — the form logic is in the class, not the template.
+    Use Reactive for complex forms with dynamic fields, cross-field validation, or programmatic control.
+  </div>
+
+  <app-code-snippet [code]="code" />
+</div>

@@ -1,0 +1,63 @@
+<div class="playground">
+  <div class="pg-label">Playground 06</div>
+  <h2 class="pg-title">Pure vs Impure Pipes</h2>
+  <p class="pg-desc">
+    Pure pipes only re-run when the input reference changes — Angular can cache the result.
+    Impure pipes re-run on <em>every</em> change detection cycle, even when nothing changed.
+    Use pure by default. Reach for impure only when you need to detect mutations inside arrays or objects.
+  </p>
+
+  <div class="pipe-controls">
+    <input class="filter-input" [(ngModel)]="filterText" placeholder="Type to filter items..." />
+    <button class="btn" (click)="addItem()">Add item</button>
+    <button class="btn btn-ghost" (click)="mutateArray()">Mutate array (push)</button>
+    <button class="btn btn-ghost" (click)="replaceArray()">Replace array (new ref)</button>
+  </div>
+
+  <div class="pipe-grid">
+    <div class="pipe-col">
+      <div class="pipe-col-label">Pure Pipe</div>
+      <div class="pipe-runs">ran <strong>{{ pureRuns }}</strong> times</div>
+      <p class="pipe-col-desc">Won't detect mutation (push). Detects new array reference.</p>
+      <div class="pipe-list">
+        @for (item of items | pureFilter: filterText; track item) {
+          <div class="pipe-item">{{ item }}</div>
+        } @empty {
+          <div class="pipe-empty">no matches</div>
+        }
+      </div>
+    </div>
+
+    <div class="pipe-col">
+      <div class="pipe-col-label">Impure Pipe</div>
+      <div class="pipe-runs">ran <strong>{{ impureRuns }}</strong> times</div>
+      <p class="pipe-col-desc">Detects everything — mutations, keystrokes, all events.</p>
+      <div class="pipe-list">
+        @for (item of items | impureFilter: filterText; track item) {
+          <div class="pipe-item">{{ item }}</div>
+        } @empty {
+          <div class="pipe-empty">no matches</div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="pipe-defs">
+    <div class="pipe-def-label">built-in angular pipes</div>
+    @for (pipe of builtinPipes; track pipe.name) {
+      <div class="pipe-def-row">
+        <span class="pipe-def-name">{{ pipe.name }}</span>
+        <span class="pipe-def-example">{{ pipe.example }}</span>
+        <span class="pipe-def-out">{{ pipe.output }}</span>
+      </div>
+    }
+  </div>
+
+  <div class="insight">
+    <span class="insight-label">key insight</span>
+    Pure pipes are memoized. The same input always returns the same output without re-running.
+    This is why you should use immutable patterns when working with OnPush + pipes.
+  </div>
+
+  <app-code-snippet [code]="code" />
+</div>

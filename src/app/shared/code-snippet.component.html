@@ -1,0 +1,8 @@
+<div class="snippet-wrap">
+  <button class="snippet-toggle" (click)="open = !open">
+    {{ open ? 'hide code' : 'view code' }} →
+  </button>
+  @if (open) {
+    <pre class="snippet-block"><code>{{ code }}</code></pre>
+  }
+</div>

@@ -1,0 +1,34 @@
+.snippet-wrap {
+  margin-top: 1.25rem;
+}
+
+.snippet-toggle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--dim);
+  background: none;
+  border: none;
+  padding: 0;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--text);
+  }
+}
+
+.snippet-block {
+  margin-top: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+
+  code {
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--muted);
+    white-space: pre;
+  }
+}

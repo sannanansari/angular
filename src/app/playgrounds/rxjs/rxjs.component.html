@@ -1,0 +1,49 @@
+<div class="playground">
+  <div class="pg-label">Playground 03</div>
+  <h2 class="pg-title">RxJS Operators</h2>
+  <p class="pg-desc">
+    Most Angular developers use <em>switchMap</em> blindly. Each operator has a specific job.
+    Click "Search" rapidly to see how each one handles concurrent requests differently.
+    This is the most common source of bugs in Angular HTTP calls.
+  </p>
+
+  <div class="operator-grid">
+    @for (op of operators; track op.key) {
+      <div class="operator-box" [class.active-op]="activeOp === op.key">
+        <div class="op-header">
+          <span class="op-name">{{ op.name }}</span>
+          <button class="btn-search" (click)="search(op.key)">search</button>
+        </div>
+        <p class="op-desc">{{ op.desc }}</p>
+        <div class="op-log">
+          @for (entry of getLogs(op.key); track entry.id) {
+            <div class="op-entry" [class]="'entry-' + entry.type">
+              <span class="entry-time">{{ entry.time }}</span>
+              <span class="entry-msg">{{ entry.msg }}</span>
+            </div>
+          } @empty {
+            <span class="op-empty">click search to test</span>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="use-cases">
+    <div class="uc-label">when to use each</div>
+    @for (op of operators; track op.key) {
+      <div class="uc-row">
+        <span class="uc-name">{{ op.name }}</span>
+        <span class="uc-use">{{ op.useCase }}</span>
+      </div>
+    }
+  </div>
+
+  <div class="insight">
+    <span class="insight-label">key insight</span>
+    switchMap cancels the previous request — ideal for search.
+    exhaustMap ignores new clicks while a request is in flight — ideal for form submit.
+  </div>
+
+  <app-code-snippet [code]="code" />
+</div>

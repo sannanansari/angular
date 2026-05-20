@@ -1,0 +1,41 @@
+<div class="playground">
+  <div class="pg-label">Playground 01</div>
+  <h2 class="pg-title">Change Detection</h2>
+  <p class="pg-desc">
+    Angular checks components for changes on every browser event by default.
+    <strong>Default strategy</strong> re-renders even when nothing relevant changed.
+    <strong>OnPush</strong> skips re-rendering unless an &#64;Input reference changes,
+    an event fires, or an Observable emits. The difference becomes critical at scale.
+  </p>
+
+  <div class="demo-grid">
+    <div class="demo-box">
+      <div class="demo-box-label">Default Strategy</div>
+      <div class="counter-display">{{ defaultCount }}</div>
+      <div class="render-count">rendered <strong>{{ defaultRenders }}</strong> times</div>
+      <button class="btn" (click)="incrementDefault()">Increment</button>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-box-label">OnPush Strategy</div>
+      <div class="counter-display">{{ onpushCount }}</div>
+      <div class="render-count">rendered <strong>{{ onpushRenders }}</strong> times</div>
+      <button class="btn" (click)="incrementOnpush()">Increment</button>
+    </div>
+  </div>
+
+  <div class="tick-row">
+    <button class="btn btn-ghost" (click)="triggerGlobalEvent()">
+      Trigger global event (click, setTimeout)
+    </button>
+    <span class="tick-note">Watch Default re-render. OnPush stays still.</span>
+  </div>
+
+  <div class="insight">
+    <span class="insight-label">key insight</span>
+    OnPush components only re-render when their inputs change — not on every global event.
+    This can reduce rendering by 80%+ in large component trees.
+  </div>
+
+  <app-code-snippet [code]="code" />
+</div>

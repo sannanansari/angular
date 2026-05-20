@@ -1,0 +1,44 @@
+<div class="shell">
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <span class="site-name">Sannan Ansari</span>
+        <span class="site-sub">Angular Architecture Playground</span>
+      </div>
+      <a class="header-link" href="https://sannan.app" target="_blank">sannan.app →</a>
+    </div>
+  </header>
+
+  <nav class="tab-nav">
+    <div class="tab-nav-inner">
+      @for (tab of tabs; track tab.key) {
+        <button
+          class="tab-btn"
+          [class.active]="activeTab === tab.key"
+          (click)="activeTab = tab.key"
+        >
+          <span class="tab-num">{{ tab.num }}</span>
+          {{ tab.label }}
+        </button>
+      }
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="main-inner">
+      @switch (activeTab) {
+        @case ('cd')        { <app-change-detection /> }
+        @case ('lifecycle') { <app-lifecycle /> }
+        @case ('rxjs')      { <app-rxjs /> }
+        @case ('di')        { <app-di /> }
+        @case ('forms')     { <app-forms /> }
+        @case ('pipes')     { <app-pipes /> }
+      }
+    </div>
+  </main>
+
+  <footer class="footer">
+    <span>Mohammed Sanan Ansari · <a href="https://sannan.app">sannan.app</a></span>
+    <span>Angular 18 · Standalone · RxJS 7</span>
+  </footer>
+</div>

@@ -1,0 +1,58 @@
+<div class="playground">
+  <div class="pg-label">Playground 02</div>
+  <h2 class="pg-title">Lifecycle Hooks</h2>
+  <p class="pg-desc">
+    Every Angular component goes through a predictable sequence of events from birth to death.
+    Understanding this sequence tells you <em>exactly</em> where to put initialisation logic,
+    subscriptions, DOM interactions, and cleanup code.
+  </p>
+
+  <div class="controls">
+    <button class="btn" (click)="spawnComponent()">Create Component</button>
+    <button class="btn btn-ghost" (click)="destroyComponent()" [disabled]="!alive">Destroy Component</button>
+    <button class="btn btn-ghost" (click)="changeInput()">Change &#64;Input</button>
+    <button class="btn btn-ghost" (click)="clearLog()">Clear log</button>
+  </div>
+
+  @if (alive) {
+    <div class="live-component">
+      <span class="live-label">component alive</span>
+      <span class="live-input">&#64;Input value: <strong>{{ inputValue }}</strong></span>
+    </div>
+  }
+
+  <div class="log-wrap">
+    <div class="log-header">
+      <span class="log-title">lifecycle log</span>
+      <span class="log-count">{{ logs.length }} events</span>
+    </div>
+    <div class="log-list">
+      @for (log of logs; track log.id) {
+        <div class="log-row">
+          <span class="log-time">{{ log.time }}</span>
+          <span class="log-hook" [class]="'hook-' + log.type">{{ log.hook }}</span>
+          <span class="log-msg">{{ log.msg }}</span>
+        </div>
+      } @empty {
+        <div class="log-empty">Click "Create Component" to start</div>
+      }
+    </div>
+  </div>
+
+  <div class="hook-table">
+    @for (hook of hookDefs; track hook.name) {
+      <div class="hook-row">
+        <span class="hook-name">{{ hook.name }}</span>
+        <span class="hook-when">{{ hook.when }}</span>
+      </div>
+    }
+  </div>
+
+  <div class="insight">
+    <span class="insight-label">key insight</span>
+    Never put HTTP calls in a constructor. Use ngOnInit.
+    Always unsubscribe in ngOnDestroy to prevent memory leaks.
+  </div>
+
+  <app-code-snippet [code]="code" />
+</div>
